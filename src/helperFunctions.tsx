@@ -1,13 +1,14 @@
-import {auth, db} from '../firebase';
+import {auth} from '../firebase';
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
+  User,
 } from 'firebase/auth';
-import {collection, getDocs} from 'firebase/firestore';
+// import {collection, getDocs} from 'firebase/firestore';
 
-export const createAccount = (email: string, password: string) => {
-  createUserWithEmailAndPassword(auth, email, password)
+export const createAccount = async (email: string, password: string) => {
+  return createUserWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
       // Signed in
       const user = userCredential.user;
@@ -20,13 +21,13 @@ export const createAccount = (email: string, password: string) => {
       const errorMessage = error.message;
       console.log('Error code: ' + errorCode);
       console.log('Error message: ' + errorMessage);
+      return false;
       // ..
     });
-  return false;
 };
 
-export const logIn = (email: string, password: string) => {
-  signInWithEmailAndPassword(auth, email, password)
+export const logIn = async (email: string, password: string) => {
+  return signInWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
       // Signed in
       const user = userCredential.user;
@@ -40,12 +41,12 @@ export const logIn = (email: string, password: string) => {
       const errorMessage = error.message;
       console.log('Error code: ' + errorCode);
       console.log('Error message: ' + errorMessage);
+      return false;
     });
-  return false;
 };
 
-export const handleSignOut = () => {
-  signOut(auth)
+export const handleSignOut = async () => {
+  return signOut(auth)
     .then(() => {
       console.log('Sign out');
       return true;
@@ -54,27 +55,41 @@ export const handleSignOut = () => {
       console.log(error.message);
       return false;
     });
-  return true;
+  // return true;
 };
 
-export const getImage = (
-  collectionName: string,
-  setFunc: (arg0: {url: string}[]) => void,
-) => {
-  const collectionRef = collection(db, collectionName);
-  getDocs(collectionRef)
-    .then(snapshot => {
-      let tempItems: {url: string}[] = [];
-      snapshot.docs.forEach((doc, _index) => {
-        tempItems.push({...doc.data(), url: 'bob'});
-      });
-      console.log('in then', tempItems);
-      setFunc(tempItems);
-    })
-    .catch(error => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log('Error code: ' + errorCode);
-      console.log('Error message: ' + errorMessage);
-    });
+export const deleteAccount = () => {
+  const user = auth.currentUser as User;
+  // deleteUser(user)
+  //   .then(() => {
+  //     return true;
+  //   })
+  //   .catch(error => {
+  //     console.log(error.message);
+  //     return false;
+  //   });
+  console.log(auth.currentUser);
+  return user;
 };
+
+// export const getImage = (
+//   collectionName: string,
+//   setFunc: (arg0: {url: string}[]) => void,
+// ) => {
+//   const collectionRef = collection(db, collectionName);
+//   getDocs(collectionRef)
+//     .then(snapshot => {
+//       let tempItems: {url: string}[] = [];
+//       snapshot.docs.forEach((doc, _index) => {
+//         tempItems.push({...doc.data(), url: 'bob'});
+//       });
+//       console.log('in then', tempItems);
+//       setFunc(tempItems);
+//     })
+//     .catch(error => {
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//       console.log('Error code: ' + errorCode);
+//       console.log('Error message: ' + errorMessage);
+//     });
+// };

@@ -6,7 +6,7 @@ import AuthScreen from './src/AuthScreen';
 import MainTabMenu from './src/MainTabMenu';
 import SettingsScreen from './src/SettingsScreen';
 import {AuthContextType, RootStackParamList} from './src/@types';
-import {createAccount, logIn} from './src/helperFunctions';
+import {createAccount, deleteAccount, logIn} from './src/helperFunctions';
 
 export const AuthContext = React.createContext<AuthContextType | null>(null);
 
@@ -79,10 +79,12 @@ const App = () => {
     () => ({
       signIn: async (email: string, password: string) => {
         console.log(email + password);
-        if (!logIn(email, password)) {
+        let value = await logIn(email, password);
+        if (value) {
           dispatch({type: 'SIGN_IN', token: 'bob'});
           storeUserSession();
         }
+        console.log(value);
       },
       signOut: async () => {
         try {
@@ -98,8 +100,11 @@ const App = () => {
       },
       signUp: async (email: string, password: string) => {
         console.log(email + password);
-        if (createAccount(email, password)) {
+        console.log(deleteAccount());
+        let value = await createAccount(email, password);
+        if (value) {
           dispatch({type: 'SIGN_IN', token: 'bob'});
+          storeUserSession();
         }
       },
     }),

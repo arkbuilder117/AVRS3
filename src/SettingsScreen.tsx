@@ -12,7 +12,9 @@ export default function SettingsPage() {
       <View style={styles.buttonContainer}>
         <Pressable
           style={({pressed}) => [styles.button, pressed ? {opacity: 0.8} : {}]}
-          onPress={() => (handleSignOut() ? signOut() : console.log('Error'))}>
+          onPress={async () =>
+            (await handleSignOut()) ? signOut() : console.log('Error')
+          }>
           <Text style={styles.buttonText}>Sign Out</Text>
         </Pressable>
       </View>
