@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {db} from '../firebase';
+import {db} from '../../firebase';
 import {collection, getDocs} from 'firebase/firestore';
-import MenuItem from './MenuItem';
-import {CartContext} from './MainTabMenu';
-import {CartContextType, SnackType} from './@types';
+import MenuItem from '../components/MenuItem';
+import {CartContext} from '../components/MainTabMenu';
+import {CartContextType, SnackType} from '../@types';
 
 export default function MenuPage() {
   const [snacks, setSnacks] = React.useState<SnackType[]>([]);

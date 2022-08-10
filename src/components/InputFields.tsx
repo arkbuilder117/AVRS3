@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
-import {AuthContextType} from './@types';
-// import {createAccount, signIn} from './helperFunctions';
-import {AuthContext} from '../App';
+import {AuthContextType} from '../@types';
+import {AuthContext} from '../../App';
 
 const InputFields = (props: {type: string | undefined}) => {
   const [email, setEmail] = React.useState('');

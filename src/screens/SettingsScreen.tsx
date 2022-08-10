@@ -1,8 +1,8 @@
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import React from 'react';
-import {AuthContextType} from './@types';
-import {AuthContext} from '../App';
-import {handleSignOut} from './helperFunctions';
+import {AuthContextType} from '../@types';
+import {AuthContext} from '../../App';
+import {handleSignOut} from '../functions/helperFunctions';
 
 export default function SettingsPage() {
   const {signOut} = React.useContext(AuthContext) as AuthContextType;

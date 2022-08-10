@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import * as React from 'react';
-import BackButton from './BackButton';
-import InputFields from './InputFields';
+import BackButton from '../components/BackButton';
+import InputFields from '../components/InputFields';
 // import {AuthContext} from './App';
 // import type {StackScreenProps} from '@react-navigation/stack';
 
@@ -37,12 +37,14 @@ const AuthScreen = () => {
           <>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => setInputType('SIGN_UP')}>
+              onPress={() => setInputType('SIGN_UP')}
+              testID={'signUp'}>
               <Text style={styles.buttonText}>Sign Up?</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => setInputType('LOG_IN')}>
+              onPress={() => setInputType('LOG_IN')}
+              testID={'logIn'}>
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
           </>

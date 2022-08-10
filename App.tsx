@@ -2,11 +2,15 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import AuthScreen from './src/AuthScreen';
-import MainTabMenu from './src/MainTabMenu';
-import SettingsScreen from './src/SettingsScreen';
+import AuthScreen from './src/screens/AuthScreen';
+import MainTabMenu from './src/components/MainTabMenu';
+import SettingsScreen from './src/screens/SettingsScreen';
 import {AuthContextType, RootStackParamList} from './src/@types';
-import {createAccount, deleteAccount, logIn} from './src/helperFunctions';
+import {
+  createAccount,
+  deleteAccount,
+  logIn,
+} from './src/functions/helperFunctions';
 
 export const AuthContext = React.createContext<AuthContextType | null>(null);
 

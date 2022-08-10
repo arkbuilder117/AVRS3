@@ -1,9 +1,9 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import MenuScreen from './MenuScreen';
-import CartScreen from './CartScreen';
-import SettingsScreen from './SettingsScreen';
-import {CartContextType, CartItemType} from './@types';
+import MenuScreen from '../screens/MenuScreen';
+import CartScreen from '../screens/CartScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+import {CartContextType, CartItemType} from '../@types';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export const CartContext = React.createContext<CartContextType | null>(null);

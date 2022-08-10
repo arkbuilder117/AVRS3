@@ -2,7 +2,7 @@ import {View, Text, Pressable, Image, StyleSheet} from 'react-native';
 import React, {useState, useEffect} from 'react';
 
 import {getDownloadURL, getStorage, ref} from 'firebase/storage';
-import {SnackType} from './@types';
+import {SnackType} from '../@types';
 // import {CartContext} from './MainTabMenu';
 // import {CartContextType} from './@types';
 

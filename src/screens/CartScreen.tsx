@@ -1,12 +1,12 @@
 import {View, Text, Pressable, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
 
-import CartItem from './CartItem';
+import CartItem from '../components/CartItem';
 
-import {db} from '../firebase';
+import {db} from '../../firebase';
 import {doc, setDoc} from 'firebase/firestore';
-import {CartContext} from './MainTabMenu';
-import {CartContextType} from './@types';
+import {CartContext} from '../components/MainTabMenu';
+import {CartContextType} from '../@types';
 
 export default function ShoppingCartPage() {
   const [orderNum, setOrderNum] = useState('');
