@@ -15,6 +15,7 @@ export default function ShoppingCartPage() {
   const placeOrder = () => {
     let order = Math.floor(100000 + Math.random() * 900000);
     let snacks = [];
+
     for (let i = 0; i < cart.length; i++) {
       for (let j = 0; j < cart[i].count; j++) {
         snacks.push(cart[i].name);
@@ -31,23 +32,35 @@ export default function ShoppingCartPage() {
   return (
     <View style={styles.container}>
       <View style={styles.itemsContainer}>
-        {/* {cart.map((item, index) => (
-          <>{item.count > 0 && <CartItem key={index} item={item} />}</>
-        ))} */}
         {cart.map((item, index) => (
           <CartItem key={index} item={item} />
         ))}
       </View>
-      <Text style={styles.orderText}>Order Number:</Text>
-      <Text style={styles.orderText}>{orderNum}</Text>
+      {orderNum ? (
+        <>
+          <Text style={styles.orderText}>Order Number:</Text>
+          <Text style={styles.orderText}>{orderNum}</Text>
+        </>
+      ) : (
+        <></>
+      )}
 
-      <View style={styles.buttonContainer}>
-        <Pressable
-          style={({pressed}) => [styles.button, pressed ? {opacity: 0.8} : {}]}
-          onPress={() => placeOrder()}>
-          <Text style={styles.buttonText}>Place Order</Text>
-        </Pressable>
-      </View>
+      {cart.length > 0 ? (
+        <View style={styles.buttonContainer}>
+          <Pressable
+            style={({pressed}) => [
+              styles.button,
+              pressed ? {opacity: 0.8} : {},
+            ]}
+            onPress={() => placeOrder()}>
+            <Text style={styles.buttonText}>Place Order</Text>
+          </Pressable>
+        </View>
+      ) : (
+        <View style={styles.container}>
+          <Text>Cart is empty</Text>
+        </View>
+      )}
     </View>
   );
 }

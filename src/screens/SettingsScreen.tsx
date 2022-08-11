@@ -2,19 +2,26 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 import React from 'react';
 import {AuthContextType} from '../@types';
 import {AuthContext} from '../../App';
-import {handleSignOut} from '../functions/helperFunctions';
 
 export default function SettingsPage() {
   const {signOut} = React.useContext(AuthContext) as AuthContextType;
+
+  // const checkIfSignedOut = async () => {
+  //   if (await handleSignOut()) {
+  //     // signOut();
+  //     return true;
+  //   } else {
+  //     console.log('Error');
+  //     return false;
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
         <Pressable
           style={({pressed}) => [styles.button, pressed ? {opacity: 0.8} : {}]}
-          onPress={async () =>
-            (await handleSignOut()) ? signOut() : console.log('Error')
-          }>
+          onPress={async () => signOut()}>
           <Text style={styles.buttonText}>Sign Out</Text>
         </Pressable>
       </View>

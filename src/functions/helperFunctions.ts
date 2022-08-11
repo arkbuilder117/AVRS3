@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   User,
+  deleteUser,
 } from 'firebase/auth';
 // import {collection, getDocs} from 'firebase/firestore';
 
@@ -58,18 +59,17 @@ export const handleSignOut = async () => {
   // return true;
 };
 
-export const deleteAccount = () => {
+export const deleteAccount = async () => {
   const user = auth.currentUser as User;
-  // deleteUser(user)
-  //   .then(() => {
-  //     return true;
-  //   })
-  //   .catch(error => {
-  //     console.log(error.message);
-  //     return false;
-  //   });
-  console.log(auth.currentUser);
-  return user;
+  console.log(user);
+  return deleteUser(user)
+    .then(() => {
+      return true;
+    })
+    .catch(error => {
+      console.log(error.message);
+      return false;
+    });
 };
 
 // export const getImage = (

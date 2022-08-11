@@ -8,7 +8,7 @@ import SettingsScreen from './src/screens/SettingsScreen';
 import {AuthContextType, RootStackParamList} from './src/@types';
 import {
   createAccount,
-  deleteAccount,
+  handleSignOut,
   logIn,
 } from './src/functions/helperFunctions';
 
@@ -90,13 +90,14 @@ const App = () => {
         }
         console.log(value);
       },
-      signOut: async () => {
+      signOut: () => {
         try {
-          await EncryptedStorage.removeItem('usser_session');
+          EncryptedStorage.removeItem('usser_session');
           console.log('removes session');
         } catch (error) {
           console.log(error);
         }
+        handleSignOut();
         dispatch({
           type: 'SIGN_OUT',
           token: undefined,
@@ -104,7 +105,6 @@ const App = () => {
       },
       signUp: async (email: string, password: string) => {
         console.log(email + password);
-        console.log(deleteAccount());
         let value = await createAccount(email, password);
         if (value) {
           dispatch({type: 'SIGN_IN', token: 'bob'});

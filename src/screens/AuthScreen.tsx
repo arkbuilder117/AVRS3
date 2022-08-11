@@ -12,7 +12,7 @@ const AuthScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require('./img/logo.png')} />
+      <Image style={styles.image} source={require('../img/logo.png')} />
 
       {inputType !== '' && (
         <View style={styles.backButton}>

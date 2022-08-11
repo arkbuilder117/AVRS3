@@ -1,5 +1,7 @@
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import React, {useState} from 'react';
+import {CartContext} from '../components/MainTabMenu';
+import {CartContextType} from '../@types';
 
 export default function CartItem(props: {
   item: {
@@ -9,10 +11,15 @@ export default function CartItem(props: {
 }) {
   const [count, setCount] = useState(props.item.count);
 
+  const {deleteFromCart} = React.useContext(CartContext) as CartContextType;
+
   const onMinusPress = () => {
     console.log('clicked minus');
     setCount(count - 1);
     props.item.count = count - 1;
+    if (props.item.count === 0) {
+      deleteFromCart(props.item);
+    }
     console.log(props.item.count);
   };
 

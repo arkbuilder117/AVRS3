@@ -15,11 +15,17 @@ const MainTabMenu = () => {
   const [cart, setCart] = React.useState<CartItemType[]>([]);
 
   const addToCart = (item: CartItemType) => {
-    // const {cart} = React.useContext(CartContext);
-
     console.log('\n\nhello ' + item);
     setCart([...cart, item]);
     console.log(cart);
+  };
+
+  const deleteFromCart = (item: CartItemType) => {
+    console.log('Deleting ' + item.name + ' from cart');
+    const index = cart.indexOf(item);
+    if (index > -1) {
+      cart.splice(index, 1);
+    }
   };
 
   const emptyCart = () => {
@@ -28,10 +34,8 @@ const MainTabMenu = () => {
     console.log(cart);
   };
 
-  // const cart: Array<string> = [''];
-
   return (
-    <CartContext.Provider value={{emptyCart, addToCart, cart}}>
+    <CartContext.Provider value={{addToCart, deleteFromCart, emptyCart, cart}}>
       <Tab.Navigator
         screenOptions={({route}) => ({
           tabBarIcon: ({focused, color, size}) => {

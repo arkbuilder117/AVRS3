@@ -10,14 +10,34 @@ export type AuthContextType = {
   signUp: (email: string, password: string) => void;
 };
 
+export type AuthContextTypeTwo = {
+  signIn: (
+    email: string,
+    password: string,
+    dispatch: (arg0: {type: string; token: string}) => void,
+    storeUserSession: () => void,
+  ) => void;
+  signOut: (
+    removeItem: (arg0: string) => void,
+    dispatch: (arg0: {type: string; token: undefined}) => void,
+  ) => void;
+  signUp: (
+    email: string,
+    password: string,
+    dispatch: (arg0: {type: string; token: string}) => void,
+    storeUserSession: () => void,
+  ) => void;
+};
+
 export type CartItemType = {
   name: string;
   count: number;
 };
 
 export type CartContextType = {
-  emptyCart: () => void;
   addToCart: (item: CartItemType) => void;
+  deleteFromCart: (item: CartItemType) => void;
+  emptyCart: () => void;
   cart: Array<CartItemType>;
 };
 

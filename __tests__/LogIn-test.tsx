@@ -10,11 +10,10 @@ import {AuthContext} from '../App';
 
 // What the hell I did
 /*
-  So I mocked the logIn function. I can't figure out async with jest, so I found a way around it. This should let me tst when a user logs in to see if the screen changes.
+  So I mocked the logIn function. I can't figure out async with jest, so I found a way around it. This should let me test when a user logs in to see if the screen changes.
 */
 jest.mock('../src/functions/helperFunctions', () => ({
-  logIn: (email: string, password: string) => {
-    console.log(email + ' ' + password);
+  logIn: () => {
     return true;
   },
 }));
@@ -37,9 +36,8 @@ describe('log in thing', () => {
 
     fireEvent.press(getByText('Login'));
     const loginElement = queryByPlaceholderText('Email');
-    console.log(loginElement);
+    // console.log(loginElement);
     expect(loginElement).toBeTruthy();
-    // expect.anything();
   });
 
   test('shown AuthScreen user can click Sign Up? button', () => {
@@ -54,7 +52,7 @@ describe('log in thing', () => {
 
     fireEvent.press(getByText('Sign Up?'));
     const loginElement = queryByPlaceholderText('Email');
-    console.log(loginElement);
+    // console.log(loginElement);
     expect(loginElement).toBeTruthy();
     // expect.anything();
   });
