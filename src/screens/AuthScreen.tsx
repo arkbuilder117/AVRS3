@@ -18,8 +18,9 @@ const AuthScreen = () => {
         <View style={styles.backButton}>
           <BackButton
             backPress={() => {
-              setInputType('');
+              setInputType;
             }}
+            args={''}
           />
         </View>
       )}

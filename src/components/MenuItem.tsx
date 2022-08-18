@@ -3,8 +3,6 @@ import React, {useState, useEffect} from 'react';
 
 import {getDownloadURL, getStorage, ref} from 'firebase/storage';
 import {SnackType} from '../@types';
-// import {CartContext} from './MainTabMenu';
-// import {CartContextType} from './@types';
 
 export default function MenuItem(props: {
   thing: SnackType;
@@ -13,36 +11,20 @@ export default function MenuItem(props: {
   const [itemUrl, setItemUrl] = useState(
     '/Users/noahwalker/AVRS/AVRS_RNCLI/src/img/white.png',
   );
-  // const {addToCart} = React.useContext(CartContext) as CartContextType;
 
   const getImage = (image: string | undefined) => {
     const storage = getStorage();
-    // console.log('getImage', image);
     const starsRef = ref(storage, image);
 
     getDownloadURL(starsRef)
       .then(url => {
-        // console.log("2 works", url);
-
-        // setSource([]);
-        // let urlTemp = source;
-
-        // if(urlTemp.length === 0) {
-        //     urlTemp.pop();
-        // }
-        // urlTemp.pop();
-        // urlTemp.push(url);
         setItemUrl(url);
-
-        // setSource(url);
-        // console.log('2 source', url);
         return url;
       })
       .catch(error => {
         console.log('2 not work', error.message);
         console.log(error);
       });
-    // Need to add a snack component that gets an image specific to the snack
   };
 
   useEffect(() => {
@@ -62,7 +44,6 @@ export default function MenuItem(props: {
         />
         <Text>{props.thing.Name}</Text>
       </Pressable>
-      {/* <Text>{itemUrl}</Text> */}
     </View>
   );
 }
@@ -81,14 +62,11 @@ const styles = StyleSheet.create({
   headerContainer: {
     flex: 1,
     justifyContent: 'center',
-    // backgroundColor: 'red',
     width: '100%',
   },
   snacksContainer: {
     flex: 5,
     width: '100%',
-    // backgroundColor: 'white',
-    // alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',

@@ -31,6 +31,5 @@ jest.mock('react-native-encrypted-storage', () => {
 
 jest.useFakeTimers();
 declare global {
-  // eslint-disable-next-line no-underscore-dangle
   let __TEST__: any;
 }

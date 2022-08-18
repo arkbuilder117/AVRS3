@@ -10,10 +10,20 @@ import App, {AuthContext} from '../App';
 import renderer from 'react-test-renderer';
 import AuthScreen from '../src/screens/AuthScreen';
 import CartScreen from '../src/screens/CartScreen';
-import {CartContext} from '../src/components/MainTabMenu';
-import {CartItemType} from '../src/@types';
 import MenuScreen from '../src/screens/MenuScreen';
 import SettingsScreen from '../src/screens/SettingsScreen';
+import CartProvider from '../src/functions/CartContext';
+
+jest.mock('@react-navigation/native', () => {
+  const actualNav = jest.requireActual('@react-navigation/native');
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: jest.fn(),
+      dispatch: jest.fn(),
+    }),
+  };
+});
 
 describe('Testing if screens will render', () => {
   it('App renders correctly', () => {
@@ -26,16 +36,27 @@ describe('Testing if screens will render', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  const emptyCart = jest.fn();
-  const addToCart = jest.fn();
-  const cart = [] as Array<CartItemType>;
-
   it('CartScreen renders correctly', () => {
+    // const useIsFocused = jest.fn();
+
+    jest.mock('@react-navigation/native', () => ({
+      useIsFocused: () => true,
+    }));
+
+    const createTestProps = (props: Object) => ({
+      navigation: {
+        navigate: jest.fn(),
+      },
+      ...props,
+    });
+    let props: any;
+    props = createTestProps({});
+
     const tree = renderer
       .create(
-        <CartContext.Provider value={{emptyCart, addToCart, cart}}>
-          <CartScreen />
-        </CartContext.Provider>,
+        <CartProvider>
+          <CartScreen {...props} />
+        </CartProvider>,
       )
       .toJSON();
     expect(tree).toMatchSnapshot();
@@ -44,9 +65,9 @@ describe('Testing if screens will render', () => {
   it('MenuScreen renders correctly', () => {
     const tree = renderer
       .create(
-        <CartContext.Provider value={{emptyCart, addToCart, cart}}>
+        <CartProvider>
           <MenuScreen />
-        </CartContext.Provider>,
+        </CartProvider>,
       )
       .toJSON();
     expect(tree).toMatchSnapshot();

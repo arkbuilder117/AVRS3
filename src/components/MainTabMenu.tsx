@@ -3,8 +3,10 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MenuScreen from '../screens/MenuScreen';
 import CartScreen from '../screens/CartScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import {CartContextType, CartItemType} from '../@types';
+// import {CartContextType, CartItemType} from '../@types';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {CartContextType} from '../@types';
+import CartProvider from '../functions/CartContext';
 
 export const CartContext = React.createContext<CartContextType | null>(null);
 // Translate cart and setCart from previos version to using context instead
@@ -12,30 +14,35 @@ export const CartContext = React.createContext<CartContextType | null>(null);
 const Tab = createBottomTabNavigator();
 
 const MainTabMenu = () => {
-  const [cart, setCart] = React.useState<CartItemType[]>([]);
+  // const [cart, setCart] = React.useState<CartItemType[]>([]);
 
-  const addToCart = (item: CartItemType) => {
-    console.log('\n\nhello ' + item);
-    setCart([...cart, item]);
-    console.log(cart);
-  };
+  // const addToCart = (item: CartItemType) => {
+  //   console.log('\n\nhello ' + item);
+  //   setCart([...cart, item]);
+  //   console.log(cart);
+  // };
 
-  const deleteFromCart = (item: CartItemType) => {
-    console.log('Deleting ' + item.name + ' from cart');
-    const index = cart.indexOf(item);
-    if (index > -1) {
-      cart.splice(index, 1);
-    }
-  };
+  // const deleteFromCart = (item: CartItemType) => {
+  //   console.log('Deleting ' + item.name + ' from cart');
+  //   const index = cart.findIndex(x => x.name === item.name);
+  //   console.log(cart.findIndex(x => x.name === item.name));
+  //   // let tempCart = cart;
+  //   if (index > -1) {
+  //     cart.splice(index, 1);
+  //     console.log(cart);
+  //   }
+  //   setCart(cart);
+  //   console.log(cart);
+  // };
 
-  const emptyCart = () => {
-    setCart([]);
-    console.log('Empty cart');
-    console.log(cart);
-  };
+  // const emptyCart = () => {
+  //   setCart([]);
+  //   console.log('Empty cart');
+  //   console.log(cart);
+  // };
 
   return (
-    <CartContext.Provider value={{addToCart, deleteFromCart, emptyCart, cart}}>
+    <CartProvider>
       <Tab.Navigator
         screenOptions={({route}) => ({
           tabBarIcon: ({focused, color, size}) => {
@@ -83,7 +90,7 @@ const MainTabMenu = () => {
               fontWeight: 'bold',
             },
             headerTitleAlign: 'left',
-            tabBarBadge: cart.length > 0 ? cart.length : '',
+            // tabBarBadge: cart.length > 0 ? cart.length : '',
           }}
         />
         <Tab.Screen
@@ -101,7 +108,72 @@ const MainTabMenu = () => {
           }}
         />
       </Tab.Navigator>
-    </CartContext.Provider>
+    </CartProvider>
+    // <Tab.Navigator
+    //   screenOptions={({route}) => ({
+    //     tabBarIcon: ({focused, color, size}) => {
+    //       let iconName = '';
+
+    //       if (route.name === 'menu') {
+    //         iconName = focused ? 'menu' : 'menu-outline';
+    //       }
+    //       if (route.name === 'cart') {
+    //         iconName = focused ? 'cart' : 'cart-outline';
+    //       }
+    //       if (route.name === 'settings') {
+    //         iconName = focused ? 'settings' : 'settings-outline';
+    //       }
+
+    //       // You can return any component that you like here!
+    //       return <Icon name={iconName} size={size} color={color} />;
+    //     },
+    //     tabBarActiveTintColor: 'black',
+    //     tabBarInactiveTintColor: 'gray',
+    //   })}>
+    //   <Tab.Screen
+    //     name="menu"
+    //     component={MenuScreen}
+    //     options={{
+    //       headerShown: true,
+    //       title: 'Snacks',
+    //       headerStyle: {backgroundColor: '#EFF1F7'},
+    //       headerTitleStyle: {
+    //         fontSize: 30,
+    //         fontWeight: 'bold',
+    //       },
+    //       headerTitleAlign: 'left',
+    //     }}
+    //   />
+    //   {/* <Tab.Screen
+    //     name="cart"
+    //     component={CartScreen}
+    //     options={{
+    //       headerShown: true,
+    //       title: 'Shopping Cart',
+    //       headerStyle: {backgroundColor: '#EFF1F7'},
+    //       headerTitleStyle: {
+    //         fontSize: 30,
+    //         fontWeight: 'bold',
+    //       },
+    //       headerTitleAlign: 'left',
+    //       // tabBarBadge: cart.length > 0 ? cart.length : '',
+    //     }}
+    //   /> */}
+    //   {/* <Tab.Screen
+    //     name="settings"
+    //     component={SettingsScreen}
+    //     options={{
+    //       headerShown: true,
+    //       title: 'Settings',
+    //       headerStyle: {backgroundColor: '#EFF1F7'},
+    //       headerTitleStyle: {
+    //         fontSize: 30,
+    //         fontWeight: 'bold',
+    //       },
+    //       headerTitleAlign: 'left',
+    //     }}
+    //   /> */}
+    // </Tab.Navigator>
   );
 };
 

@@ -3,30 +3,30 @@ import {View, StyleSheet} from 'react-native';
 import {db} from '../../firebase';
 import {collection, getDocs} from 'firebase/firestore';
 import MenuItem from '../components/MenuItem';
-import {CartContext} from '../components/MainTabMenu';
 import {CartContextType, SnackType} from '../@types';
+import {useCart} from '../functions/CartContext';
 
 export default function MenuPage() {
   const [snacks, setSnacks] = React.useState<SnackType[]>([]);
 
-  const {cart, addToCart} = React.useContext(CartContext) as CartContextType;
+  const {cart, addToCart, addCartItem} = useCart() as CartContextType;
 
   React.useEffect(() => {
     const snacksRef = collection(db, 'snacks');
-    getDocs(snacksRef)
-      .then(snapshot => {
-        let snacksTemp: SnackType[] = [];
-        snapshot.docs.forEach(doc => {
-          snacksTemp.push({
-            ...(doc.data() as SnackType),
-          });
+    const fetchData = async () => {
+      let snacksTemp: SnackType[] = [];
+      const snapshot = await getDocs(snacksRef);
+      snapshot.forEach(doc => {
+        console.log(doc.id, ' => ', doc.data());
+        snacksTemp.push({
+          ...(doc.data() as SnackType),
         });
-        setSnacks(snacksTemp);
-      })
-      .catch(err => {
-        console.log(err.message);
       });
-  }, [snacks]);
+      setSnacks(snacksTemp);
+      console.log('finished');
+    };
+    fetchData();
+  }, []);
 
   const onSnackPress = (key: string) => {
     console.log('on press', key);
@@ -42,8 +42,7 @@ export default function MenuPage() {
     if (cart.some(item => item.name === key)) {
       for (let i = 0; i < cart.length; i++) {
         if (cart[i].name === key) {
-          console.log(cart[i].name);
-          cart[i].count = cart[i].count + 1;
+          addCartItem(i);
         }
       }
     } else {
@@ -77,14 +76,11 @@ const styles = StyleSheet.create({
   headerContainer: {
     flex: 1,
     justifyContent: 'center',
-    // backgroundColor: 'red',
     width: '100%',
   },
   snacksContainer: {
     flex: 5,
     width: '100%',
-    // backgroundColor: 'white',
-    // alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',

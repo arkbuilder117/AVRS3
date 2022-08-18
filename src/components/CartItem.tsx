@@ -1,35 +1,15 @@
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import React, {useState} from 'react';
-import {CartContext} from '../components/MainTabMenu';
 import {CartContextType} from '../@types';
+import {useCart} from '../functions/CartContext';
+import {onButtonPress} from '../functions/helperFunctions';
 
-export default function CartItem(props: {
-  item: {
-    count: number;
-    name: string;
-  };
-}) {
-  const [count, setCount] = useState(props.item.count);
+export default function CartItem(props: {item: number; key: number}) {
+  const {cart, addCartItem, minusCartItem} = useCart() as CartContextType;
 
-  const {deleteFromCart} = React.useContext(CartContext) as CartContextType;
+  const [count, setCount] = useState(cart[props.item].count);
 
-  const onMinusPress = () => {
-    console.log('clicked minus');
-    setCount(count - 1);
-    props.item.count = count - 1;
-    if (props.item.count === 0) {
-      deleteFromCart(props.item);
-    }
-    console.log(props.item.count);
-  };
-
-  const onPlusPress = () => {
-    console.log('clicked plus');
-    setCount(count + 1);
-    props.item.count = count + 1;
-  };
-
-  if (props.item.count > 0) {
+  if (cart[props.item].count > 0) {
     return (
       <View style={styles.container}>
         <View style={styles.buttonsContainer}>
@@ -38,10 +18,11 @@ export default function CartItem(props: {
               styles.button,
               pressed ? {opacity: 0.8} : {},
             ]}
-            onPress={() => onPlusPress()}>
+            onPress={() =>
+              onButtonPress(addCartItem, setCount, props.item, cart)
+            }>
             <Text style={styles.buttonText}>+</Text>
           </Pressable>
-
           <Text>{count}</Text>
 
           <Pressable
@@ -49,13 +30,15 @@ export default function CartItem(props: {
               styles.button,
               pressed ? {opacity: 0.8} : {},
             ]}
-            onPress={() => onMinusPress()}>
+            onPress={() =>
+              onButtonPress(minusCartItem, setCount, props.item, cart)
+            }>
             <Text style={styles.buttonText}>-</Text>
           </Pressable>
         </View>
 
         <View style={styles.nameContainer}>
-          <Text>{props.item.name}</Text>
+          <Text>{cart[props.item].name}</Text>
         </View>
       </View>
     );

@@ -10,7 +10,7 @@ import {
   createAccount,
   handleSignOut,
   logIn,
-} from './src/functions/helperFunctions';
+} from './src/functions/firebaseHelperFunctions';
 
 export const AuthContext = React.createContext<AuthContextType | null>(null);
 

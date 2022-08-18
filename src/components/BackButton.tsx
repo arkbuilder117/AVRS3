@@ -1,20 +1,15 @@
-import {
-  GestureResponderEvent,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
 const BackButton = (props: {
-  backPress: ((event: GestureResponderEvent) => void) | null | undefined;
+  backPress: (value?: React.SetStateAction<string>) => void;
+  args?: string;
 }) => {
   return (
     <View>
       <Pressable
         style={({pressed}) => [styles.button, pressed ? {opacity: 0.8} : {}]}
-        onPress={props.backPress}>
+        onPress={() => props.backPress(props.args)}>
         <Text>Back</Text>
       </Pressable>
     </View>

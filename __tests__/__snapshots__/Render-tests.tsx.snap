@@ -524,70 +524,19 @@ exports[`Testing if screens will render CartScreen renders correctly 1`] = `
       }
     }
   />
-  <Text
-    style={
-      Object {
-        "fontSize": 20,
-        "margin": 10,
-      }
-    }
-  >
-    Order Number:
-  </Text>
-  <Text
-    style={
-      Object {
-        "fontSize": 20,
-        "margin": 10,
-      }
-    }
-  />
   <View
     style={
       Object {
+        "alignItems": "center",
         "flex": 1,
         "justifyContent": "center",
+        "width": "100%",
       }
     }
   >
-    <View
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#05111B",
-            "borderRadius": 10,
-            "height": 50,
-            "justifyContent": "center",
-            "margin": 15,
-            "width": 200,
-          },
-          Object {},
-        ]
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#DBDDDF",
-          }
-        }
-      >
-        Place Order
-      </Text>
-    </View>
+    <Text>
+      Cart is empty
+    </Text>
   </View>
 </View>
 `;

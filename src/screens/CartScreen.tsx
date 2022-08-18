@@ -5,12 +5,16 @@ import CartItem from '../components/CartItem';
 
 import {db} from '../../firebase';
 import {doc, setDoc} from 'firebase/firestore';
-import {CartContext} from '../components/MainTabMenu';
+// import {CartContext} from '../components/MainTabMenu';
 import {CartContextType} from '../@types';
+import {useCart} from '../functions/CartContext';
+import {useIsFocused} from '@react-navigation/native';
 
 export default function ShoppingCartPage() {
   const [orderNum, setOrderNum] = useState('');
-  const {cart, emptyCart} = React.useContext(CartContext) as CartContextType;
+  const {cart, emptyCart} = useCart() as CartContextType;
+
+  const isFocused = useIsFocused();
 
   const placeOrder = () => {
     let order = Math.floor(100000 + Math.random() * 900000);
@@ -32,9 +36,11 @@ export default function ShoppingCartPage() {
   return (
     <View style={styles.container}>
       <View style={styles.itemsContainer}>
-        {cart.map((item, index) => (
-          <CartItem key={index} item={item} />
-        ))}
+        {isFocused ? (
+          cart.map((item, index) => <CartItem key={index} item={index} />)
+        ) : (
+          <></>
+        )}
       </View>
       {orderNum ? (
         <>

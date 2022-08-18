@@ -36,6 +36,8 @@ export type CartItemType = {
 
 export type CartContextType = {
   addToCart: (item: CartItemType) => void;
+  addCartItem: (index: number) => void;
+  minusCartItem: (index: number) => void;
   deleteFromCart: (item: CartItemType) => void;
   emptyCart: () => void;
   cart: Array<CartItemType>;
@@ -47,3 +49,7 @@ export type SnackType = {
   Total: number;
   image: string;
 };
+
+export interface ParentCompProps {
+  children?: React.ReactNode;
+}
