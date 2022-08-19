@@ -65,7 +65,7 @@ exports[`Tests for CartItem component. Renders correctly 1`] = `
       </Text>
     </View>
     <Text>
-      1
+      2
     </Text>
     <View
       accessible={true}

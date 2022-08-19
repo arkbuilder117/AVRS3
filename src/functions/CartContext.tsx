@@ -9,7 +9,7 @@ const CartProvider: React.FC<ParentCompProps> = ({children}) => {
   const [cart, setCart] = React.useState<CartItemType[]>([]);
 
   const addToCart = (item: CartItemType) => {
-    console.log('\nadd to cart ' + item);
+    console.log('add to cart ' + item);
     setCart([...cart, item]);
     console.log(cart);
   };

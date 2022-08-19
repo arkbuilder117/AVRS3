@@ -4,26 +4,35 @@ import renderer from 'react-test-renderer';
 import CartItem from '../src/components/CartItem';
 import * as CartProviderr from '../src/functions/CartContext';
 import {CartItemType} from '../src/@types';
+import {fireEvent, render} from '@testing-library/react-native';
 
 describe('Tests for CartItem component.', () => {
+  // Mocked CartContext
+  const cart = [{name: 'snack', count: 2}];
+  const addCartItem = jest.fn((index: number) => {
+    console.log(index);
+    cart[index].count++;
+  });
+  const minusCartItem = jest.fn((index: number) => {
+    console.log(index);
+    cart[index].count--;
+  });
+  const addToCart = (item: CartItemType) => console.log(item);
+  const deleteFromCart = (item: CartItemType) => console.log(item);
+  const emptyCart = () => console.log('empty');
+
+  // THIS ONE WORKED!!!
+  // This is what actually mocks the useCart hook
+  jest.spyOn(CartProviderr, 'useCart').mockImplementation(() => ({
+    cart,
+    addCartItem,
+    minusCartItem,
+    addToCart,
+    deleteFromCart,
+    emptyCart,
+  }));
+
   it('Renders correctly', () => {
-    const cart = [{name: 'snack', count: 1}];
-    const addCartItem = (index: number) => console.log(index);
-    const minusCartItem = (index: number) => console.log(index);
-    const addToCart = (item: CartItemType) => console.log(item);
-    const deleteFromCart = (item: CartItemType) => console.log(item);
-    const emptyCart = () => console.log('empty');
-
-    // THIS ONE WORKED!!!
-    jest.spyOn(CartProviderr, 'useCart').mockImplementation(() => ({
-      cart,
-      addCartItem,
-      minusCartItem,
-      addToCart,
-      deleteFromCart,
-      emptyCart,
-    }));
-
     const tree = renderer
       .create(
         <CartProviderr.default>
@@ -35,10 +44,28 @@ describe('Tests for CartItem component.', () => {
   });
 
   it('Add a snack', () => {
-    expect(true).toBe(true);
+    const {getByText} = render(
+      <CartProviderr.default>
+        <CartItem item={0} key={0} />
+      </CartProviderr.default>,
+    );
+    let initial = cart[0].count;
+    fireEvent.press(getByText('+'));
+    let later = cart[0].count;
+    expect(addCartItem).toBeCalled();
+    expect(later > initial).toBe(true);
   });
 
   it('Subtract a snack', () => {
-    expect(true).toBe(true);
+    const {getByText} = render(
+      <CartProviderr.default>
+        <CartItem item={0} key={0} />
+      </CartProviderr.default>,
+    );
+    let initial = cart[0].count;
+    fireEvent.press(getByText('-'));
+    let later = cart[0].count;
+    expect(minusCartItem).toBeCalled();
+    expect(later < initial).toBe(true);
   });
 });
