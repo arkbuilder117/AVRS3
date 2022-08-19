@@ -20,17 +20,17 @@ jest.mock('../src/functions/firebaseHelperFunctions', () => ({
   },
 }));
 
-jest.mock('firebase/auth', () => ({
-  signInWithEmailAndPassword: (email: string, password: string) => {
-    console.log('signInWithEmailAndPassword ' + email + ' ' + password);
-    return true;
-  },
-  getAuth: () => {
-    return {
-      name: 'noah',
-    };
-  },
-}));
+// jest.mock('firebase/auth', () => ({
+//   signInWithEmailAndPassword: (email: string, password: string) => {
+//     console.log('signInWithEmailAndPassword ' + email + ' ' + password);
+//     return true;
+//   },
+//   getAuth: () => {
+//     return {
+//       name: 'noah',
+//     };
+//   },
+// }));
 
 describe('log in thing', () => {
   test('testing logIn function', () => {

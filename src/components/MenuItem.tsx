@@ -1,11 +1,12 @@
 import {View, Text, Pressable, Image, StyleSheet} from 'react-native';
 import React, {useState, useEffect} from 'react';
 
-import {getDownloadURL, getStorage, ref} from 'firebase/storage';
+import {getDownloadURL, ref} from 'firebase/storage';
 import {SnackType} from '../@types';
+import {storage} from '../../firebase';
 
 export default function MenuItem(props: {
-  thing: SnackType;
+  snack: SnackType;
   onSnackPress: (arg0: any) => void;
 }) {
   const [itemUrl, setItemUrl] = useState(
@@ -13,7 +14,6 @@ export default function MenuItem(props: {
   );
 
   const getImage = (image: string | undefined) => {
-    const storage = getStorage();
     const starsRef = ref(storage, image);
 
     getDownloadURL(starsRef)
@@ -28,13 +28,13 @@ export default function MenuItem(props: {
   };
 
   useEffect(() => {
-    getImage(props.thing.image);
-  }, [props.thing.Name, props.thing.image]);
+    getImage(props.snack.image);
+  }, [props.snack.Name, props.snack.image]);
 
   return (
     <View>
       <Pressable
-        onPress={() => props.onSnackPress(props.thing.Name)}
+        onPress={() => props.onSnackPress(props.snack.Name)}
         style={({pressed}) => [styles.menuItem, pressed ? {opacity: 0.8} : {}]}>
         <Image
           style={styles.imageStyle}
@@ -42,7 +42,7 @@ export default function MenuItem(props: {
             uri: itemUrl,
           }}
         />
-        <Text>{props.thing.Name}</Text>
+        <Text>{props.snack.Name}</Text>
       </Pressable>
     </View>
   );

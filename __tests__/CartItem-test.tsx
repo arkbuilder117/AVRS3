@@ -62,9 +62,17 @@ describe('Tests for CartItem component.', () => {
         <CartItem item={0} key={0} />
       </CartProviderr.default>,
     );
+
     let initial = cart[0].count;
+    let countDisplayed = getByText(initial.toString());
+    expect(countDisplayed).toBeTruthy();
+
     fireEvent.press(getByText('-'));
+
     let later = cart[0].count;
+    countDisplayed = getByText(later.toString());
+    expect(countDisplayed).toBeTruthy();
+
     expect(minusCartItem).toBeCalled();
     expect(later < initial).toBe(true);
   });

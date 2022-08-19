@@ -54,7 +54,7 @@ export default function MenuPage() {
     <View style={styles.container}>
       <View style={styles.snacksContainer}>
         {snacks.map((snack, index) => (
-          <MenuItem thing={snack} onSnackPress={onSnackPress} key={index} />
+          <MenuItem snack={snack} onSnackPress={onSnackPress} key={index} />
         ))}
       </View>
     </View>
