@@ -68,25 +68,3 @@ export const deleteAccount = async () => {
       return false;
     });
 };
-
-// export const getImage = (
-//   collectionName: string,
-//   setFunc: (arg0: {url: string}[]) => void,
-// ) => {
-//   const collectionRef = collection(db, collectionName);
-//   getDocs(collectionRef)
-//     .then(snapshot => {
-//       let tempItems: {url: string}[] = [];
-//       snapshot.docs.forEach((doc, _index) => {
-//         tempItems.push({...doc.data(), url: 'bob'});
-//       });
-//       console.log('in then', tempItems);
-//       setFunc(tempItems);
-//     })
-//     .catch(error => {
-//       const errorCode = error.code;
-//       const errorMessage = error.message;
-//       console.log('Error code: ' + errorCode);
-//       console.log('Error message: ' + errorMessage);
-//     });
-// };
