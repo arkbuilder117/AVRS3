@@ -13,6 +13,7 @@ import CartScreen from '../src/screens/CartScreen';
 import MenuScreen from '../src/screens/MenuScreen';
 import SettingsScreen from '../src/screens/SettingsScreen';
 import CartProvider from '../src/functions/CartContext';
+import MockTabMenu from '../__mocks__/MockTabMenu';
 
 jest.mock('@react-navigation/native', () => {
   const actualNav = jest.requireActual('@react-navigation/native');
@@ -43,19 +44,20 @@ describe('Testing if screens will render', () => {
       useIsFocused: () => true,
     }));
 
-    const createTestProps = (props: Object) => ({
-      navigation: {
-        navigate: jest.fn(),
-      },
-      ...props,
+    // const useIsFocussed = jest.fn();
+
+    jest.mock('@react-navigation/native', () => {
+      const actualNav = jest.requireActual('@react-navigation/native');
+      return {
+        ...actualNav,
+        useIsFocussed: jest.fn(),
+      };
     });
-    let props: any;
-    props = createTestProps({});
 
     const tree = renderer
       .create(
         <CartProvider>
-          <CartScreen {...props} />
+          <MockTabMenu component={CartScreen} />
         </CartProvider>,
       )
       .toJSON();
